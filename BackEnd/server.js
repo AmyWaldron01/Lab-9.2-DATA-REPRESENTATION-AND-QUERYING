@@ -36,39 +36,59 @@ const bookSchema = new mongoose.Schema({
 
 const bookModel = mongoose.model('Booksgdfgdfgdfgsss', bookSchema);
 
-app.post('/api/books',(req,res)=>{
+app.post('/api/books', (req, res) => {
   console.log(req.body);
 
   bookModel.create({
     title: req.body.title,
-    cover:req.body.cover,
-    author:req.body.author
+    cover: req.body.cover,
+    author: req.body.author
   })
-  
+
   res.send('Data Recieved');
 })
 
 app.get('/api/books', (req, res) => {
-  bookModel.find((error, data)=>{
+  bookModel.find((error, data) => {
     res.json(data);
   })
 })
 
-app.get('/api/book/:id', (req, res)=>{
+app.get('/api/book/:id', (req, res) => {
   console.log(req.params.id);
-  bookModel.findById(req.params.id,(error,data)=>{
+  bookModel.findById(req.params.id, (error, data) => {
     res.json(data);
   })
 })
 
-app.put('/api/book/:id', (req, res)=>{
-  console.log("Update: "+req.params.id);
+app.put('/api/book/:id', (req, res) => {
+  console.log("Update: " + req.params.id);
 
-  bookModel.findByIdAndUpdate(req.params.id, req.body, {new:true},
-    (error,data)=>{
+  bookModel.findByIdAndUpdate(req.params.id, req.body, { new: true },
+    (error, data) => {
       res.send(data);
     })
 })
+
+app.put('/api/book/:id', (req, res) => {
+  console.log("Update: " + req.params.id);
+
+  bookModel.findByIdAndUpdate(req.params.id, req.body, { new: true },
+    (error, data) => {
+      res.send(data);
+    })
+})
+
+app.delete('/api/book/:id', (req, res) => {
+  console.log('Deleting: ' + req.params.id);
+
+  bookModel.findByIdAndDelete({ _id: req.params.id }, (error, data) => {
+    res.send(data);
+  })
+
+})
+
+
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
